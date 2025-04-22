@@ -1,9 +1,2 @@
 {
-    "actions": [
-        {
-            "id": "openReadmeFile",
-            "actionType": "FILE",
-            "uri": "file:///home/user/projects/A25C349JMJ/.gen/generation.log"
-        }
-    ]
 }
