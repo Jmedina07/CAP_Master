@@ -1,4 +1,8 @@
 using {LogaliGroup as service} from '../service';
+using from './annotations-suppliers';
+using from './annotations-productdetails';
+using from './annotations-reviews';
+
 
 annotate service.Products with {
     product     @title            : 'Product';
@@ -221,7 +225,7 @@ annotate service.Products with @(
         {
             $Type : 'UI.CollectionFacet',
             Facets : [
-                {
+                 {
                     $Type : 'UI.ReferenceFacet',
                     Target : 'supplier/@UI.FieldGroup#Supplier',
                     Label : 'Information'
@@ -230,21 +234,22 @@ annotate service.Products with @(
                     $Type : 'UI.ReferenceFacet',
                     Target : 'supplier/contact/@UI.FieldGroup#Contact',
                     Label: 'Contact Person'
-                }
+                } 
             ],
             Label : 'Supplier Information'
         },
-        {
+         {
             $Type : 'UI.ReferenceFacet',
             Target : 'detail/@UI.FieldGroup',
             Label : 'Product Information',
             ID : 'ProductInformation'
         },
+        
         {
             $Type : 'UI.ReferenceFacet',
             Target : 'toReviews/@UI.LineItem',
             Label : 'Reviews',
             ID : 'Reviews'
-        },
+        }, 
     ]
 );
