@@ -55,6 +55,7 @@ entity Contacts : cuid {
 entity Reviews : cuid {
     rating     : Decimal(3, 2);
     date       : Date;
+    user       : String(20);
     reviewText : LargeString;
     product    : Association to Products;
 };
@@ -84,7 +85,8 @@ entity Status : CodeList {
             InStock         = 'In Stock';
             OutOfStock      = 'Out of Stock';
             LowAvailability = 'Low Availabilit';
-        }
+        };
+    criticality: Integer;
 };
 
 /** Value Helps */
