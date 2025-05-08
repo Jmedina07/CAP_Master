@@ -1,10 +1,8 @@
 using {LogaliGroup as service} from '../service';
 
-annotate service.Status with {
-    code @title : 'Statu Name'
-    @Common : { 
+annotate service.VH_Options with {
+    code @title : 'Options' @Common: {
         Text : name,
         TextArrangement : #TextOnly
-     }
-
+    };
 };

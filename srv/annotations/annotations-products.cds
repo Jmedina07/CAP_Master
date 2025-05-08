@@ -17,7 +17,7 @@ annotate service.Products with {
     description @title            : 'Description' @UI.MultiLineText;
     statu       @title            : 'Statu';
     rating      @title            : 'Rating';
-    price       @title            : 'Price'  @Measures.ISOCurrency: currency;
+    price       @title            : 'Price'  @Measures.ISOCurrency: currency_code;
     image       @title            : 'Image';
     currency    @Common.IsCurrency;
 };
@@ -122,7 +122,7 @@ annotate service.Products with @(
         statu_code
     ],
     UI.LineItem           : [
-       {
+        {
             $Type : 'UI.DataField',
             Value : image,
             ![@HTML5.CssDefaults] : {
@@ -217,22 +217,7 @@ annotate service.Products with @(
                 Value : statu_code,
                 Criticality : statu.criticality,
                 Label : '',
-                ![@Common.FieldControl] : {
-                    $edmJson: {
-                        $If: [
-                            {
-                                $Eq: [
-                                    {
-                                        $Path: 'IsActiveEntity'
-                                    },
-                                    false
-                                ]
-                            },
-                            1,
-                            3
-                        ]
-                    }
-                },
+
             }
         ]
     },

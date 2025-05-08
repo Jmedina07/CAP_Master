@@ -3,7 +3,8 @@ namespace com.logaligroup;
 using {
     cuid,
     managed,
-    sap.common.CodeList
+    sap.common.CodeList,
+    sap.common.Currencies
 } from '@sap/cds/common';
 
 entity Products : cuid, managed {
@@ -15,9 +16,9 @@ entity Products : cuid, managed {
     category      : Association to Categories; //category      --- category_ID
     subCategory   : Association to SubCategories; //subCategory   --- subCategory_ID
     statu         : Association to Status; //statu --- statu_code
-    price         : Decimal(5, 2);
+    price         : Decimal(8, 2);
     rating        : Decimal(3, 2);
-    currency      : String;
+    currency      : Association to Currencies; //currency_code  Para hacerlo match code
     detail        : Association to ProductDetails;
     supplier      : Association to Suppliers;
     toReviews     : Association to many Reviews
@@ -84,12 +85,12 @@ entity Sales : cuid {
 /** Code List */
 
 entity Status : CodeList {
-    key code : String(20) enum {
-            InStock         = 'In Stock';
-            OutOfStock      = 'Out of Stock';
-            LowAvailability = 'Low Availabilit';
+    key code        : String(20) enum {
+            InStock = 'In Stock';
+            OutOfStock = 'Out of Stock';
+            LowAvailability = 'Low Availability';
         };
-    criticality: Integer;
+        criticality : Integer;
 };
 
 /** Value Helps */
