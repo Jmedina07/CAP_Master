@@ -1,5 +1,8 @@
 using {com.logaligroup as entities } from '../db/schema';
-
+//Conectar con una API
+using {API_BUSINESS_PARTNER as cloud } from './external/API_BUSINESS_PARTNER';
+//Conectar On premise
+//using {API_BUSINESS_PARTNER_CLUD as onpremise} from './external/API_BUSINESS_PARTNER_CLUD';
 service LogaliGroup {
 
     type dialog {
@@ -7,7 +10,7 @@ service LogaliGroup {
         amount: Integer;
     }
 
-    @cds.odata.bindingparameter.name : '_it'
+ /*   @cds.odata.bindingparameter.name : '_it'
     @Common: {
         SideEffects : {
             $Type : 'Common.SideEffectsType',
@@ -15,7 +18,7 @@ service LogaliGroup {
                 '_it/*',
             ],
         },
-    }
+    }*/
     action setSales (id : String, year : Integer, month : Integer, quantity : Integer) returns String;
 
     entity Products         as projection on entities.Products;
@@ -65,5 +68,27 @@ service LogaliGroup {
     entity VH_Categories    as projection on entities.Categories;
     entity VH_SubCategories as projection on entities.SubCategories;
     entity VH_Departments   as projection on entities.Departments;
-    entity VH_Options as projection on entities.Options;
+    entity Options as projection on entities.Options; //TEST JMJ
+
+    /*Entidades Externas*/
+
+    entity CBusinessPartner as projection on cloud.A_BusinessPartner{
+        key BusinessPartner as ID,
+        FirstName as FirstName,
+        LastName as LastName
+    };
+    
+    entity CSuppliers as projection on cloud.A_Supplier{
+        Supplier as ID,
+        SupplierName as SupplierName,
+        SupplierFullName as FullName
+    };
+/*Conectar Onpremise
+    entity CCustomer as projection on onpremise.A_Customer {
+        Customer as ID,
+        CustomerName,
+        CustomerFullName
+    };
+     */
+    
 };

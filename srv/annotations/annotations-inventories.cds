@@ -3,8 +3,8 @@ using {LogaliGroup as service} from '../service';
 annotate service.Inventories with {
     stockNumber @title: 'Stock Number' @Common.FieldControl: #ReadOnly;
     department  @title: 'Department';
-    min         @title: 'Minimun';
-    max         @title: 'Maximun';
+    min         @title: 'Minimun' @Common.FieldControl: #ReadOnly;
+    max         @title: 'Maximun'@Common.FieldControl: #ReadOnly;
     target      @title: 'Target';
     quantity    @title: 'Quantity' @Measures.Unit : baseUnit @Common.FieldControl: #ReadOnly;
     baseUnit    @title: 'Base Unit' @Common.IsUnit @Common.FieldControl: #ReadOnly;

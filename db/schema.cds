@@ -7,11 +7,14 @@ using {
     sap.common.Currencies
 } from '@sap/cds/common';
 
+//Conectar con una API
+using { API_BUSINESS_PARTNER as cloud } from '../srv/external/API_BUSINESS_PARTNER';
+
 entity Products : cuid, managed {
     product       : String(8);
     productName   : String(80);
-    image         : LargeBinary  @Core.MediaType: imageType @UI.IsImage;
-    imageType     : String       @Core.IsMediaType;    
+    image         : LargeBinary  @Core.MediaType: imageType  @UI.IsImage;
+    imageType     : String       @Core.IsMediaType;
     description   : LargeString;
     category      : Association to Categories; //category      --- category_ID
     subCategory   : Association to SubCategories; //subCategory   --- subCategory_ID
@@ -19,17 +22,18 @@ entity Products : cuid, managed {
     price         : Decimal(8, 2);
     rating        : Decimal(3, 2);
     currency      : Association to Currencies; //currency_code  Para hacerlo match code
-    detail        : Association to ProductDetails;
+    detail        : Composition of ProductDetails;
     supplier      : Association to Suppliers;
+    supplierCloud : Association to cloud.A_Supplier;
     toReviews     : Association to many Reviews
                         on toReviews.product = $self;
-    toInventories : Association to many Inventories
+    toInventories : Composition of  many Inventories
                         on toInventories.product = $self;
     toSales       : Association to many Sales
                         on toSales.product = $self;
 };
 
-type decimal : Decimal(5,3);
+type decimal : Decimal(6, 3);
 
 
 entity ProductDetails : cuid {
@@ -64,12 +68,12 @@ entity Reviews : cuid {
 };
 
 entity Inventories : cuid {
-    stockNumber : String(9);
+    stockNumber : String(11);
     department  : Association to Departments;
-    min         : Integer;
-    max         : Integer;
+    min         : Integer default 0;
+    max         : Integer default 500;
     target      : Integer;
-    quantity    : Decimal(4, 3);
+    quantity    : Decimal(6, 3);
     baseUnit    : String default 'EA';
     product     : Association to Products;
 };
@@ -86,8 +90,8 @@ entity Sales : cuid {
 
 entity Status : CodeList {
     key code        : String(20) enum {
-            InStock = 'In Stock';
-            OutOfStock = 'Out of Stock';
+            InStock         = 'In Stock';
+            OutOfStock      = 'Out of Stock';
             LowAvailability = 'Low Availability';
         };
         criticality : Integer;
@@ -112,7 +116,7 @@ entity Departments : cuid {
 
 entity Options : CodeList {
     key code : String(10) enum {
-        A = 'Add';
-        D = 'Discount'
-    }
+            A = 'Add';
+            D = 'Discount'
+        }
 };
